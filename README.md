@@ -43,3 +43,8 @@ Use session.go with web.go:
 Installation
 ========
 session.go compiles with Go latest release:
+
+1. git clone https://github.com/cranej/session.go.git session.go
+2. cd session.go
+3. gomake install
+4. `import "github.com/cranej/session"`
