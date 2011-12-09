@@ -1,6 +1,6 @@
-session.go
+session
 ========
-session.go is a simple session management module for web applications written in Go programming language. 
+session is a simple session management module for web applications written in Go programming language. 
 
 Usage
 =======
@@ -44,7 +44,12 @@ Installation
 ========
 session.go compiles with Go latest release:
 
-1. git clone https://github.com/cranej/session.go.git session.go
+    goinstall github.com/cranej/session
+will download, compile and install the package.  
+
+You also can install it by:
+
+1. git clone https://github.com/cranej/session.go session.go
 2. cd session.go
 3. gomake install
 4. `import "github.com/cranej/session"`
