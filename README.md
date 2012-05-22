@@ -14,7 +14,7 @@ Create a session with default timeout (1 hour):
 
 Create a session with specified timeout( in seconds):
 
-    s := session.NewTimeout(20 * 60)  // 20 minutes
+    s := session.NewTimeout(20 * time.Minute)  // 20 minutes
 
 Check if a session exists :
 
@@ -44,12 +44,7 @@ Installation
 ========
 session.go compiles with Go latest release:
 
-    goinstall github.com/cranej/session
+    go get github.com/cranej/session
 will download, compile and install the package.  
 
-You also can install it by:
-
-1. git clone https://github.com/cranej/session.go session.go
-2. cd session.go
-3. gomake install
-4. `import "github.com/cranej/session"`
+Then use it by `import "github.com/cranej/session"`
