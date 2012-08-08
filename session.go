@@ -1,15 +1,9 @@
 package session
 
 import (
-	"crypto/md5"
-	"encoding/hex"
 	"errors"
-	"fmt"
-	"math/rand"
-	"os"
-	"runtime"
-	"strconv"
 	"time"
+    "crypto/rand"
 )
 
 type Session string
@@ -24,7 +18,7 @@ func New() Session {
 }
 
 func NewTimeout(timeout time.Duration) Session {
-	sid, err := newGuid()
+	sid, err := generateSessionId()
 	if err != nil {
 		panic(err)
 	}
@@ -77,30 +71,11 @@ func startSession(c <-chan time.Time, sid string) {
 	delete(sessions, sid)
 }
 
-func newGuid() (string, error) {
-	f, err := os.Open("/dev/urandom")
-	if err != nil {
-		if runtime.GOOS == "windows" {
-			//no /dev/urandom on windows
-			//TODO: use some windows api instead ?
-			guid := getMd5Hex(time.Now().UTC().Format(time.ANSIC) + strconv.FormatInt(rand.Int63(), 10))
-			return guid, nil
-		}
-		return "", err
-	}
-	defer f.Close()
+func generateSessionId() (string, error) {
+    bytes := make([]byte, 32)
+    if _, err := rand.Read(bytes); err != nil {
+        return "", err
+    }
 
-	b := make([]byte, 16)
-	_, err = f.Read(b)
-	if err != nil {
-		return "", err
-	}
-	uuid := fmt.Sprintf("%x-%x-%x-%x-%x", b[0:4], b[4:6], b[6:8], b[8:10], b[10:])
-	return uuid, nil
-}
-
-func getMd5Hex(input string) string {
-	hasher := md5.New()
-	hasher.Write([]byte(input))
-	return hex.EncodeToString(hasher.Sum(nil))
+    return string(bytes), nil
 }
